@@ -1,8 +1,8 @@
 <template>
   <li
     :class="[
-      item.children && item.children.length > 0 ? 'has-sub' : '',
-      item.active ? 'active' : '',
+      item.children && item.children.length > 0 ? 'has-sub' : null,
+      item.active ? 'active' : null,
     ]"
   >
     <div class="link" @click="itemClick">
@@ -27,8 +27,12 @@ export default defineComponent({
       type: Object as PropType<ISidebarList>,
       required: true,
     },
+    active: {
+      type: Boolean,
+      required: false,
+    },
   },
-  setup() {
+  setup(props) {
     const itemClick = (e: MouseEvent) => {}
     return { itemClick }
   },

@@ -7,9 +7,8 @@
   },
   "dependencies": {
     "nprogress": "^0.2.0",
-    "vue": "^3.0.5",
-    "vue-router": "^4.0.10",
-    "vuescroll": "^4.17.3"
+    "vue": "^3.1.2",
+    "vue-router": "^4.0.10"
   },
   "devDependencies": {
     "@types/node": "^15.12.4",

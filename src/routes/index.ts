@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import Home from '@/views/index.vue'
-import Page404 from '@/views/error_page/404.vue'
+import Page404 from '@/views/error_page/page_404.vue'
 import { configure, start, done } from 'nprogress'
 import 'nprogress/nprogress.css'
 configure({ showSpinner: false })
@@ -13,7 +13,7 @@ const routes: RouteRecordRaw[] = [
   },
   {
     path: '/404',
-    name: '404',
+    name: 'p404',
     component: Page404,
   },
 ]
