@@ -19,4 +19,11 @@ export default defineComponent({
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
+html {
+  font-family: 'Open Sans', sans-serif;
+  color: #2d353c;
+  background-color: #dee2e6;
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
 </style>

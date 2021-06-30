@@ -5,7 +5,7 @@ export interface ITodoList {
 }
 
 export interface ISidebarList {
+  name: string
   title: string
-  active: boolean
   children: ISidebarList[]
 }

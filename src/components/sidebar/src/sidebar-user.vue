@@ -1,15 +1,13 @@
 <template>
-  <ul class="nav">
-    <li class="nav-profile">
-      <div class="image">
-        <img :src="img" alt="" />
-      </div>
-      <div class="info">
-        <div class="title">{{ title }}</div>
-        <div class="desc">{{ desc }}</div>
-      </div>
-    </li>
-  </ul>
+  <div class="menu-profile">
+    <div class="menu-profile-image">
+      <img :src="img" alt="" />
+    </div>
+    <div class="menu-profile-info">
+      <div class="title">{{ title }}</div>
+      <div class="desc">{{ desc }}</div>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">

@@ -1,14 +1,20 @@
 <template>
-  <ul class="nav">
-    <li class="nav-header">{{ header }}</li>
+  <div class="menu-list">
+    <div class="menu-header">{{ header }}</div>
     <template v-for="item in list">
-      <SidebarItem :item="item"></SidebarItem>
+      <SidebarItem
+        :item="item"
+        :current="current"
+        :expand="expand"
+        @nodeSelect="selectItem"
+        @nodeExpand="expandItem"
+      ></SidebarItem>
     </template>
-  </ul>
+  </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
+import { defineComponent, PropType, reactive, toRefs } from 'vue'
 import { ISidebarList } from '../../types'
 import SidebarItem from './sidebar-item.vue'
 
@@ -27,8 +33,26 @@ export default defineComponent({
       required: true,
     },
   },
+  emits: ['select-item'],
   setup() {
-    return {}
+    const state = reactive({
+      current: [] as string[],
+      expand: [] as string[],
+    })
+    const selectItem = (items: string[]) => {
+      state.current = items
+    }
+    const expandItem = (items: string[]) => {
+      if (items.length > 0) {
+        const index = state.expand.indexOf(items[items.length - 1])
+        if (index != -1) {
+          state.expand.splice(index, 1)
+          return
+        }
+      }
+      state.expand = items
+    }
+    return { ...toRefs(state), selectItem, expandItem }
   },
 })
 </script>

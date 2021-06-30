@@ -1,23 +1,37 @@
 <template>
-  <li
+  <div
     :class="[
-      item.children && item.children.length > 0 ? 'has-sub' : null,
-      item.active ? 'active' : null,
+      'menu-item',
+      hasSub ? 'has-sub' : null,
+      current.indexOf(item.name) != -1 ? 'active' : null,
+      expand.indexOf(item.name) != -1 ? 'expand' : null,
     ]"
   >
-    <div class="link" @click="itemClick">
-      <span>{{ item.title }}</span>
+    <div class="menu-link" @click.stop="itemClick">
+      <div class="menu-icon" v-if="item.icon">
+        <i class="iconfont" :class="item.icon"></i>
+      </div>
+      <div class="menu-text">
+        {{ item.title }}
+      </div>
+      <div class="menu-caret" v-if="hasSub"></div>
     </div>
-    <ul class="sub-menu" v-if="item.children && item.children.length > 0">
+    <div class="menu-submenu sliedDown" v-if="hasSub">
       <template v-for="child in item.children">
-        <SidebarItem :item="child"></SidebarItem>
+        <SidebarItem
+          :item="child"
+          :current="current"
+          :expand="expand"
+          @nodeSelect="selectItem"
+          @nodeExpand="expandItem"
+        ></SidebarItem>
       </template>
-    </ul>
-  </li>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, reactive } from 'vue'
+import { computed, defineComponent, PropType, reactive, toRefs } from 'vue'
 import { ISidebarList } from '../../types'
 
 export default defineComponent({
@@ -27,14 +41,38 @@ export default defineComponent({
       type: Object as PropType<ISidebarList>,
       required: true,
     },
-    active: {
-      type: Boolean,
+    current: {
+      type: Array,
+      required: false,
+    },
+    expand: {
+      type: Array,
       required: false,
     },
   },
-  setup(props) {
-    const itemClick = (e: MouseEvent) => {}
-    return { itemClick }
+  emits: ['nodeSelect', 'nodeExpand'],
+  setup(props, ctx) {
+    const state = reactive({})
+    const hasSub = computed(() => {
+      return props.item.children && props.item.children.length > 0
+    })
+
+    const selectItem = (items: string[]) => {
+      ctx.emit('nodeSelect', [props.item.name, ...items])
+    }
+    const expandItem = (items: string[]) => {
+      ctx.emit('nodeExpand', [props.item.name, ...items])
+    }
+
+    const itemClick = () => {
+      if (props.item.children && props.item.children.length > 0) {
+        expandItem([])
+      } else {
+        selectItem([])
+      }
+    }
+
+    return { ...toRefs(state), itemClick, hasSub, selectItem, expandItem }
   },
 })
 </script>
