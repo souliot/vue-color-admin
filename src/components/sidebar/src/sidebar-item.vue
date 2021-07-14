@@ -16,7 +16,7 @@
       </div>
       <div class="menu-caret" v-if="hasSub"></div>
     </div>
-    <div class="menu-submenu sliedDown" v-if="hasSub">
+    <div class="menu-submenu" v-if="hasSub">
       <template v-for="child in item.children">
         <SidebarItem
           :item="child"
